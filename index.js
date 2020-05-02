@@ -2,7 +2,7 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require("util");
 const axios = require("axios");
-
+const writeFileAsync = util.promisify(fs.writeFile);
 
     function promptUser() {
         return inquirer.prompt([
@@ -50,7 +50,7 @@ const axios = require("axios");
         ]);
       }
 
-      function generateHTML(answers) {
+      function generatereadme(answers) {
         return `
       Contents of this file 
       ----------------------
@@ -94,3 +94,10 @@ const axios = require("axios");
       ;
       }
 
+
+
+      promptUser()
+      .then(function(answers){
+          const md = generatereadme(answers);
+          return writeFileAsync("README.md",md);
+      })
